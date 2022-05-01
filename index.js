@@ -38,7 +38,11 @@ const books = [
     какими инструментами ему нужно пользоваться.`,
   },
 ];
-
+const BOOKS = "books";
+// const booksJson = JSON.stringify(books)
+if (!localStorage.getItem(BOOKS)) {
+  localStorage.setItem(BOOKS, JSON.stringify(books));
+}
 console.log(books);
 
 const divEl = document.querySelector("#root");
@@ -62,8 +66,9 @@ divLeft.prepend(title, ulEl, btnEl);
 title.classList.add("title");
 ulEl.classList.add("ul");
 btnEl.classList.add("btn_add");
-
+createList();
 function createList() {
+  const books = JSON.parse(localStorage.getItem(BOOKS));
   const markup = books
     .map(
       (book) =>
@@ -83,9 +88,13 @@ function createList() {
   deleteBtnEl.forEach((el) => el.addEventListener("click", deleteBook));
 }
 
-createList();
+
+
+const addBookEl = document.querySelector(".btn_add");
+addBookEl.addEventListener("click", addBookFunc);
 
 function showPriew(event) {
+  const books = JSON.parse(localStorage.getItem(BOOKS));
   const book = books.find((book) => event.target.textContent === book.title);
   renderPriew(book);
 }
@@ -96,16 +105,77 @@ function renderPriew(book) {
 }
 
 function createPriewMarkup(obj) {
-  return `<h2>${obj.title}</h2><p>${obj.author}</p><img src="${obj.img}"><p>${obj.plot}</p>`;
+  return `<div class="right-preview" id ="${obj.id}"><h2>${obj.title}</h2><p>${obj.author}</p><img src="${obj.img}"><p>${obj.plot}</p></div>`;
 }
 
 function editBook(event) {
+  const books = JSON.parse(localStorage.getItem(BOOKS));
   const book = books.find((book) => event.target.parentNode.id === book.id);
-  console.log(book);
+  divRight.innerHTML = "";
+  divRight.insertAdjacentHTML("afterbegin", createFormMarkup(book));
+
 }
 
-function deleteBook() {
-  console.log("delete");
+function deleteBook(event) {
+  const books = JSON.parse(localStorage.getItem(BOOKS));
+  const book = books.filter((book) => event.target.parentNode.id !== book.id);
+  localStorage.setItem(BOOKS, JSON.stringify(book));
+  ulEl.innerHTML = "";
+  createList();
+
+  if (divRight.innerHTML !== "") {
+    const divRightEl = document.querySelector(".right-preview");
+    if (divRightEl.id === event.target.parentNode.id) {
+      console.log(event.target.parentNode.id);
+      divRight.innerHTML = "";
+      
+    }
+  }
 }
 
+function addBookFunc() {
+  
+  const newBook = {
+    id: `${Date.now()}`,
+    author: "",
+    title: "",
+    plot: "",
+    img: "",
+  };
+  divRight.innerHTML = "";
+  divRight.insertAdjacentHTML("afterbegin", createFormMarkup(newBook));
+  
+  fillObject(newBook);
 
+  const saveBtnEl = document.querySelector(".save");
+  saveBtnEl.addEventListener("click", saveBook);
+
+  function saveBook() {
+    const books = JSON.parse(localStorage.getItem(BOOKS));
+    books.push(newBook);
+    localStorage.setItem(BOOKS, JSON.stringify(books));
+    ulEl.innerHTML = "";
+    createList();
+    renderPriew(newBook);
+  }
+}
+
+function createFormMarkup(book) {
+  return `<form class='add_book'>
+  <label>Author<input value="${book.author}" name="author" class="form_input" type = 'text'></label>
+  <label>Title<input value="${book.title}" name="title" class="form_input" type = 'text'></label>
+  <label>Image<input value="${book.img}" name="img" class="form_input" type = 'text'></label>
+  <label>Plot<input value="${book.plot}" name="plot" class="form_input" type = 'text' ></label>
+  <button class="save" type="button">Save</button>
+  </form>`;
+}
+
+function fillObject(book) {
+  const inputsAll = document.querySelectorAll("input");
+  inputsAll.forEach((el) => {
+    el.addEventListener("input", addValue);
+  });
+  function addValue(event) {
+    book[event.target.name] = event.target.value;
+  }
+}
