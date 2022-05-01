@@ -1,12 +1,20 @@
 .left_container {
-padding: 10px;
+padding: 15px;
 width: 40%;
-background-color: tomato;
+background-color: tan;
+
+
 }
 
 .right_container {
+    padding: 15px;
 width: 60%;
-background-color: aqua;
+background-color: aquamarine;
+
+font-family: 'Roboto',
+sans-serif;
+font-size: 16px;
+font-style: oblique;
 }
 
 #root {
@@ -14,14 +22,22 @@ background-color: aqua;
 }
 
 .title {
-    color: aqua
+    font-family: 'Roboto',
+    sans-serif;
+    font-size: 32px;
+    color: slateblue
 }
 .ul {
 list-style-type: none;
 }
 
 .btn_add {
- background-color: green;
+    font-family: 'Roboto',
+    sans-serif;
+    font-size: 18px;
+ background-color: rosybrown;
+ border-radius: 10px;
+box-shadow: 3px 3px 5px 3px darkslategray;
 }
 
 .list {
@@ -29,16 +45,32 @@ display: flex;
 }
 
 .text {
-
+font-family: 'Roboto',
+sans-serif;
+font-size: 14px;
 }
 
 .edit_btn {
 margin-left: auto;
-background-color: #fff;
 
+font-family: 'Roboto',
+sans-serif;
+font-size: 16px;
+
+background-color: gray;
+border-radius: 10px;
+box-shadow: 3px 3px 5px 3px darkslategray;
 }
 
 .delete_btn {
 margin-left: 5px;
-background-color: red;
+padding: 5px;
+background-color: rosybrown;
+
+font-family: 'Roboto',
+sans-serif;
+font-size: 16px;
+
+border-radius: 10px;
+box-shadow: 3px 3px 5px 3px darkslategray;
 }

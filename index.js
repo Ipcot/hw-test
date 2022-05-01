@@ -74,7 +74,7 @@ function createList() {
   ulEl.insertAdjacentHTML("afterbegin", markup);
 
   const pEl = document.querySelectorAll(".text");
-  pEl.forEach((el) => el.addEventListener("click", showPreiw));
+  pEl.forEach((el) => el.addEventListener("click", showPriew));
 
   const editBtnEl = document.querySelectorAll(".edit_btn");
   editBtnEl.forEach((el) => el.addEventListener("click", editBook));
@@ -85,17 +85,17 @@ function createList() {
 
 createList();
 
-function showPreiw(event) {
+function showPriew(event) {
   const book = books.find((book) => event.target.textContent === book.title);
-  renderPreiw(book);
+  renderPriew(book);
 }
 
-function renderPreiw(book) {
+function renderPriew(book) {
   divRight.innerHTML = "";
-  divRight.insertAdjacentHTML("afterbegin", createPreiwMarkup(book));
+  divRight.insertAdjacentHTML("afterbegin", createPriewMarkup(book));
 }
 
-function createPreiwMarkup(obj) {
+function createPriewMarkup(obj) {
   return `<h2>${obj.title}</h2><p>${obj.author}</p><img src="${obj.img}"><p>${obj.plot}</p>`;
 }
 
@@ -107,3 +107,5 @@ function editBook(event) {
 function deleteBook() {
   console.log("delete");
 }
+
+
